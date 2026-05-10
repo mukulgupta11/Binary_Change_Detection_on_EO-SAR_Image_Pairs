@@ -14,7 +14,7 @@ model:
 
 training:
   batch_size: 4
-  epochs: 5
+  epochs: 20
   learning_rate: 0.0001
   weight_decay: 0.0001
   num_workers: 0
@@ -25,4 +25,4 @@ loss:
   name: "bce_dice"
   bce_weight: 0.5
   dice_weight: 0.5
-  pos_weight: 5.0 # For BCE, to handle class imbalance
+  pos_weight: 5.0 # Increased to help with change detection recall
