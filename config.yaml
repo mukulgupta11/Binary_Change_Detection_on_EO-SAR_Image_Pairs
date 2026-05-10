@@ -1,28 +1,28 @@
-# Configuration for Binary Change Detection
+# ULTIMATE CONFIGURATION FOR GALAXEYE ASSIGNMENT
 
 data:
-  train_dir: "./train/train"
-  val_dir: "./val/val"
-  test_dir: "./test/test"
+  train_dir: "/tmp/data/train"
+  val_dir: "/tmp/data/val"
+  test_dir: "/tmp/data/test"
 
 model:
-  architecture: "unet"
-  encoder_name: "resnet34"
+  architecture: "unetplusplus"  # Upgraded from Unet to Unet++
+  encoder_name: "resnet101"     # The "Professor" brain
   encoder_weights: "imagenet"
-  in_channels: 4 # Will be updated dynamically if needed (e.g., EO=3, SAR=1)
+  in_channels: 4 
   classes: 1
 
 training:
-  batch_size: 4
-  epochs: 20
+  batch_size: 2                # Keep at 2 to avoid memory crashes
+  epochs: 40                   # Double the training time for maximum accuracy
   learning_rate: 0.0001
-  weight_decay: 0.0001
-  num_workers: 0
+  weight_decay: 0.01
+  num_workers: 2               # Parallel data loading
   seed: 42
   save_dir: "./weights"
 
 loss:
   name: "bce_dice"
-  bce_weight: 0.5
-  dice_weight: 0.5
-  pos_weight: 5.0 # Increased to help with change detection recall
+  bce_weight: 0.4              # Slightly more weight on Dice for better boundaries
+  dice_weight: 0.6
+  pos_weight: 20.0             # Max sensitivity to change
