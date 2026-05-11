@@ -7,14 +7,14 @@ data:
 
 model:
   architecture: "unetplusplus"  # Upgraded from Unet to Unet++
-  encoder_name: "resnet101"     # The "Professor" brain
+  encoder_name: "resnet34"     # Faster backbone for the final 7-hour sprint
   encoder_weights: "imagenet"
   in_channels: 4 
   classes: 1
 
 training:
   batch_size: 2                # Keep at 2 to avoid memory crashes
-  epochs: 40                   # Double the training time for maximum accuracy
+  epochs: 25                   # Safely fits within the 7.5 hour remaining quota
   learning_rate: 0.0001
   weight_decay: 0.01
   num_workers: 2               # Parallel data loading
@@ -25,4 +25,4 @@ loss:
   name: "bce_dice"
   bce_weight: 0.4              # Slightly more weight on Dice for better boundaries
   dice_weight: 0.6
-  pos_weight: 20.0             # Max sensitivity to change
+  pos_weight: 2.0              # Balanced sensitivity to stop yellow-blob hallucinations
