@@ -32,21 +32,21 @@ The dataloader expects the following structure:
 ├── test/
 ```
 
-## Training Command
-To train the model from scratch using the config file:
+## Training
+Command to run training from scratch:
 ```bash
 python train.py
 ```
+*(Note: The script automatically loads hyperparameters from `config.yaml`)*
 
-## Evaluation Command
-To run threshold sweeping and evaluation on the test set:
+## Evaluation
+Command to evaluate on test data by passing a path to the dataset and weights:
 ```bash
-python eval.py
+python eval.py --data_dir /tmp/data/test --weights ./weights/best_model.pth
 ```
-*(Ensure `best_model.pth` is placed in the `./weights/` directory before evaluating).*
 
 ## Model Weights
-[INSERT YOUR GOOGLE DRIVE LINK TO best_model.pth HERE]
+[GOOGLE DRIVE LINK TO best_model.pth](https://drive.google.com/file/d/12OOjo7q5kSAmKgzQPAeBIANh1FaIajzM/view?usp=sharing)
 
 ## Results (Test Split)
 | Metric | Score |
