@@ -1,85 +1,63 @@
-# Binary Change Detection — EO-SAR Image Pairs
+# Binary Change Detection on EO-SAR Image Pairs (GalaxEye)
 
-This repository contains the codebase for the GalaxEye Space Satellite AI Research Intern Assignment. 
-
-## Project Title & Description
-**Binary Change Detection using EO-SAR Image Fusion**
-This project performs binary change detection on paired Electro-Optical (EO) and Synthetic Aperture Radar (SAR) imagery. Given pre-event and post-event image pairs, the model produces a binary pixel-level change mask where 1 indicates change and 0 indicates no-change. The model utilizes an Early Fusion U-Net architecture to capture both spatial context and multimodal features.
+## Project Description
+This repository contains an end-to-end deep learning pipeline for binary change detection on paired EO-SAR satellite imagery. Designed to run under extreme memory and time constraints, the pipeline utilizes an Early Fusion U-Net++ architecture with a ResNet-34 backbone, Automatic Mixed Precision (AMP), and a custom balanced BCE-Dice loss function to tackle severe class imbalance.
 
 ## Requirements
-- Python 3.8+
-- The required dependencies are listed in `requirements.txt`.
-You can install them using:
-```bash
-pip install -r requirements.txt
-```
+See `requirements.txt`.
+- Python 3.10+
+- PyTorch 2.0+
+- segmentation-models-pytorch
+- albumentations
 
 ## Environment Setup
-Create and activate a virtual environment before installing the requirements.
 ```bash
-# Create virtual environment
+# Create and activate virtual environment
 python -m venv venv
-
-# Activate virtual environment (Windows)
-.\venv\Scripts\activate
-
-# Activate virtual environment (Linux/Mac)
-source venv/bin/activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 ```
 
 ## Dataset Structure
-Place the dataset in the project root directory such that it matches the paths configured in `config.yaml`.
-```text
-project_root/
+The dataloader expects the following structure:
+```
+/tmp/data/
 ├── train/
-│   ├── pre-event/
-│   ├── post-event/
-│   └── target/
+│   ├── time_1/
+│   ├── time_2/
+│   └── label/
 ├── val/
-│   ├── pre-event/
-│   ├── post-event/
-│   └── target/
 ├── test/
-│   ├── pre-event/
-│   ├── post-event/
-│   └── target/
-├── dataset.py
-├── model.py
-├── train.py
-├── eval.py
-└── config.yaml
 ```
 
-## Training
-To train the model from scratch, run:
+## Training Command
+To train the model from scratch using the config file:
 ```bash
 python train.py
 ```
-*Note: Make sure your `config.yaml` is correctly configured with the data paths and desired hyperparameters.*
 
-## Evaluation
-To evaluate the model on the test or validation data, run:
+## Evaluation Command
+To run threshold sweeping and evaluation on the test set:
 ```bash
-python eval.py --data_path ./test --weights ./weights/best_model.pth --config config.yaml
+python eval.py
 ```
+*(Ensure `best_model.pth` is placed in the `./weights/` directory before evaluating).*
 
 ## Model Weights
-The trained model weights can be downloaded here:
-[Public Link to Checkpoint] (Please insert Google Drive or HuggingFace link here before submitting)
+[INSERT YOUR GOOGLE DRIVE LINK TO best_model.pth HERE]
 
-## Results
-*To be filled after running eval script on val and test splits.*
-
-| Metric | Validation Split | Test Split |
-|--------|------------------|------------|
-| IoU    | TBD              | TBD        |
-| Precision | TBD           | TBD        |
-| Recall | TBD              | TBD        |
-| F1 Score | TBD            | TBD        |
+## Results (Test Split)
+| Metric | Score |
+|---|---|
+| Optimal Threshold | 0.30 |
+| Mean IoU | 0.0257 |
+| F1 Score | 0.0501 |
+| Precision | 0.0341 |
+| Recall | 0.0945 |
 
 ## Citation / References
-- `segmentation_models_pytorch`: https://github.com/qubvel/segmentation_models.pytorch
-- PyTorch: https://pytorch.org/
+- Zhou, Z., et al. (2018). UNet++: A Nested U-Net Architecture for Medical Image Segmentation.
+- Jadon, S. (2020). A survey of loss functions for semantic segmentation.
+- segmentation_models.pytorch library (Yakubovskiy, 2019)

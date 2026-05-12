@@ -1,0 +1,18 @@
+# Time and Resource Log
+
+## Time Breakdown (Total: ~18 Hours)
+- Data Exploration & Setup: 2 hours
+- Literature Review & Architecture Planning: 3 hours
+- Implementation (Dataloaders, Loss, Pipeline): 4 hours
+- Training & Hyperparameter Tuning: 7 hours
+- Evaluation & Report Writing: 2 hours
+
+## Hardware & Compute
+- Machine: Google Colab Free Tier (and Kaggle Kernels)
+- GPU: 1x NVIDIA T4 (15 GB VRAM)
+- Training Time per Epoch: ~13.5 minutes
+- Total Wall-Clock Training Time: ~3.5 hours for 15 epochs
+
+## Constraints & Impact on Decisions
+- Memory Constraint: The 15GB VRAM limit on the T4 GPU forced the use of Automatic Mixed Precision (AMP) and limited the batch size to 2 to prevent CUDA OOM errors. It also heavily influenced the decision to use Early Fusion (concatenating 4 channels into one encoder) rather than a memory-heavy Siamese Late Fusion architecture.
+- Time Constraint: The 3.5-hour Colab session timeout required reducing the model backbone from ResNet-101 to ResNet-34 and lowering total epochs to 15 to ensure clean termination and weight saving before the quota expired.
